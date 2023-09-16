@@ -1,0 +1,102 @@
+<head>
+<!--link href="/img/jquery/selectize.css" media="screen" rel="stylesheet" type="text/css"-->
+<!--link href="/img/jquery/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css"--> 
+</head>
+<div id="parent-measurement">
+<!--div id="draftText" style="color:#ec971f; float:left; font-size:200%; font-weight:bold; display:none;">Draft!</div>
+<div id="copySaveTextPSpec" style="color:#449d44; float:left; font-size:200%; font-weight:bold; display:none;">Saved!</div-->
+<!--div id="saveTextMeasurement" style="color:#449d44; float:left; font-size:100%; font-weight:bold; display:none;">Saving in progress...</div-->
+<div class="form-popup" id="saveTextTechDBMeasure" style="display:none;margin-left:85px">
+    <p style="margin-top:15%" id="contentImage"><img src="[LL_REPTAG_URLPREFIXFULL /]/[LL_REPTAG_$loadingMeasure /]/loading.gif?func=doc.Fetch&nodeid=[LL_REPTAG_$loadingMeasure /]&viewType=1" width="100" /></p>
+</div>
+<iframe id="excelMeasureExport" style="display:none" ></iframe>
+<div id='inventoryMeasurement' style='margin-right:5px; text-align:center;'>
+  <button class="binf-btn binf-btn-primary" id="modifyMeasurement" style="">Modify</button>
+  <button class="binf-btn binf-btn-danger" id='exportMeasure' onclick="exportMeasurements();" tabindex='-1'>Export</button>
+  <button class="binf-btn binf-btn-success" style="" id="updateMeasurement">Save</button>
+  <button class="binf-btn binf-btn-danger" id="cancelMeasurement">Cancel</button>
+</div>
+</div>
+<div id="parent-measurement-add">
+<div style="float:left;color:#777;font-size:100%; font-weight:bold"><caption style="font-size:100%; font-weight:bold">Measurements table</caption></div>
+    <form enctype="multipart/form-data" class="tableForm" id="parent-techDBMeasurementTable">
+       <table class="infr-table binf-table binf-table-hover" id="tbl_posts_techdbMeasurementTable" style="font-size:12px !important">
+          <!--div style="float:left;color:#777;font-size:150%; font-weight:bold"><caption style="font-size:100%; font-weight:bold">Technical database IPS selection</caption></div-->
+          <thead>
+            <tr>
+                <th  style="width:15%"><div class="tooltipTechDBMeasurement">Property name<span class="tooltiptextTechDBMeasurement">Initial property name. </span></div></th>   	  	  	 	 	  	  	  	  	 
+                <th style="width:9%"><div class="tooltipTechDBMeasurement">Unit<span class="tooltiptextTechDBMeasurement">Measured property and unit linked to each test method (BTM or external test). For BTMs, methods and properties from QC LIMS are available. </span></div></th>
+                <!--th style="width:9%"><div class="tooltipTechDBMeasurement">Test method<span class="tooltiptextTechDBMeasurement">Measured property and unit linked to each test method (BTM or external test). For BTMs, methods and properties from QC LIMS are available. </span></div></th-->
+                <th style="width:13%"><div class="tooltipTechDBMeasurement">Standard<span class="tooltiptextTechDBMeasurement">Standard linked to the test method, e.g. relevant ISO or ASTM standard.</span></div></th>
+                <th style="width:6%"><div class="tooltipTechDBMeasurement">Target<span class="tooltiptextTechDBMeasurement">Target value for the property. Use dot (.) as decimal separator.</span></div></th>
+                <th style="width:7%"><div class="tooltipTechDBMeasurement">Range<span class="tooltiptextTechDBMeasurement">Target value for the property. Use dot (.) as decimal separator.</span></div></th>
+                <!--<th style="width:9%"><div class="tooltipTechDBMeasurement">Type<span class="tooltiptextTechDBMeasurement">Maximum limit for the property. Number of decimals should be same as for the target value, use dot (.) as decimal separator.</span></div></th>-->
+                <th style="width:6%"><div class="tooltipTechDBMeasurement">Measured value<span class="tooltiptextTechDBMeasurement">Target value for the property. Use dot (.) as decimal separator.</span></div></th>
+                <th style="width:9%"><div class="tooltipTechDBMeasurement">Test request number<span class="tooltiptextTechDBMeasurement">Sample type and point in case needed to be specified (e.g. other than final blend sample). </span></div></th>
+                <th style="width:10%"><div class="tooltipTechDBMeasurement">Measurement date<span class="tooltiptextTechDBMeasurement">Sample / testing frequency.</span></div></th>
+                <th style="width:15%"><div class="tooltipTechDBMeasurement">Remark<span class="tooltiptextTechDBMeasurement">Testing purpose and uses of the result:<br>C	Used for classification<br>
+    CA	Used for classification and Certificate of Analysis (CoA)<br>
+    P	Used for production control<br>
+    I	Used for information/statistics<br>
+    OR	Only on request.<br></span></div></th>
+                <!--th style="width:10%; text-align:center"><div class="tooltipTechDBMeasurement">Link<span class="tooltiptextTechDBMeasurement">IPS workspace name.</span></div></th-->
+                <th style="width:5%"></th>
+                <th></th>
+                <th></th>
+                <!--th></th-->
+            </tr>
+            <tr>
+                <td><input type="text" class="measureInput" id="measureInput0" onkeyup="measureFunction(0)" placeholder="Filter property"/></td>
+                <td><input type="text" class="measureInput" id="measureInput1" onkeyup="measureFunction(1)" placeholder="Filter unit"/></td>
+                <td><input type="text" class="documentInput" id="measureInput3" onkeyup="measureFunction(3)" placeholder="Filter standard"></td>
+                <td><input type="text" class="documentInput" id="measureInput4" onkeyup="measureFunction(4)" placeholder="Filter target"></td>
+                <td></td>
+                <td></td>
+                <td><input type="text" class="documentInput" id="measureInput7" onkeyup="measureFunction(7)" placeholder="Filter request number"></td>
+                <!--<td></td>-->
+                <td><input type="text" class="documentInput" id="measureInput8" onkeyup="measureFunction(8)" placeholder="Filter date"></td>
+                <td><input type="text" class="documentInput" id="measureInput9" onkeyup="measureFunction(9)" placeholder="Filter remark"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+          </thead>
+          <tbody id="tbl_posts_body_techDB_measurement_table">
+          <tr id="techdbMeasurementTable-1" class="infr-row binf-table-active">
+             </tr> 
+          </tbody>
+       </table>
+    </form>
+    <button class="binf-btn binf-btn-primary" style="margin-left:5px !important; float:left !important;" id="addRecord_emptyRow"><span>&#10010; </span>Add Row</button>
+    <button class="binf-btn binf-btn-success" style="margin-left:5px !important; float:left !important;" id="paste_mRow">Paste</button>
+</div>
+</div>
+<div id="emptyDiv" style="height:500px; width:auto; display:none;">
+</div>
+<script src="/img/jquery/jquery-1.11.0.min.js"></script>
+<script'<td><input list="measureUnit" name="customUnit" value=""><datalist id="measureUnit"></datalist></td>'+
+        //'<td><input name="method" value=""></td>'+
+        '<td><input list="measureStd" name="std" value=""><datalist id="measureStd"></datalist></td>'+
+        '<td><input name="target" class="decimals" value="" /></td>' + 
+        '<td><input name="range" class="decimals" value="" /></td>' + 
+        '<td><input id="measuredValue-' + sizeForm + '" name="measuredTable" class="decimals" /></td>' +
+        '<td><input name="testNumber" class="decimals" value="" /></td>'+
+        '<td><input style="line-height:unset" type="date" name="measureDate" class="decimals" value="" /></td>'+
+        '<td><textarea data-autoresize class="resize" name="remark" rows="1" style="width:100%; height:auto;  overflow: hidden !important"></textarea></td>'+
+        //'<td><input name="link" class="decimals" value="" /></td>'+
+        '<td><a class="btn btn-xs delete-record-measurement" data-id-delete=' + sizeForm + '><i class="binf-btn binf-btn-md binf-btn-danger" id="deleteRowMeasurement"  class="customSettings">Delete</i></a></td>' + 
+        '<td><a class="btn btn-xs copy-record-measurement" data-id-copy=' + sizeForm + '><i class="binf-btn binf-btn-md binf-btn-primary" id="copyRowMeasurement"  class="customSettings">Copy</i></a></td>' + 
+        '<td></td></tr>');
+        mCopiedRow = '<tr id="customtechdbMeasurementTable-mCopyBttn" class="infr-row binf-table-active"><td><input id="measureTable-mCopyBttn" value="'+ mProperty +'"></td>' +
+               '<td><input list="measureUnit" name="unit" value="' + mUnit + '"><datalist id="measureUnit"></datalist></td>'+
+               '<td><input list="measureStd" name="std" value="' + mStandard + '"><datalist id="measureStd"></datalist></td>'+
+               '<td><input name="target" class="decimals" value="' + mTarget + '" /></td>'+
+               '<td><input name="range" class="decimals" value="' + mRange + '" /></td>'+
+               '<td><input id="measuredValue-mCopyBttn" name="typeTable" class="decimals" value="' + mValue + '" /></td>'+
+               '<td><input name="testRequest" class="" value="' + mTestNo + '" ></td>'+
+               '<td><input type="date" style="line-height:unset" name="date" class="" value="' + mDate + '" ></td>'+
+               '<td><textarea data-autoresize-measure class="resize-measure" name="remark" rows="1" style="width:100%; height:auto;  overflow: hidden !important">' + mRemark + '</textarea></td>' + 
+               '<td><a class="btn btn-xs delete-record-measurement" data-id-delete=mCopyBttn><i class="binf-btn binf-btn-md binf-btn-danger" id="deleteRowMeasurement"  class="customSettings">Delete</i></a></td>' +
+               '<td><a class="btn btn-xs copy-record-measurement" data-id-copy=mCopyBttn><i class="binf-btn binf-btn-md binf-btn-primary" id="copyRowMeasurement"  class="customSettings">Copy</i></a></td>' +
+               '<td><input name="uniqueid" value="" type="hidden"></td></tr>'
+}) 
